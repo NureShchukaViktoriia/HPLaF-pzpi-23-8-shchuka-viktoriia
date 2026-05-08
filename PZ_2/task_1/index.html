@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоди</title>
+    <style>
+        *{
+            background-color: rgb(155, 184, 198);
+
+        }
+    </style>
+</head>
+<body>
+    <h2>Поточна погода</h2><hr>
+    <div id="weather"></div>
+
+    <script>
+        const apiKey = 'c9e978a857d7d68f481b0d246f26da41';
+        const city = 'Kharkiv';
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=ua`;
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Unable to retrieve weather data');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const temperature = data.main.temp;
+                const description = data.weather[0].description;
+                const iconCode = data.weather[0].icon;
+                const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+                document.getElementById('weather').innerHTML = `
+                    <p><strong>Місто:</strong> ${data.name}</p>
+                    <p><strong>Температура:</strong> ${temperature} °C</p>
+                    <p><strong>Опис:</strong> ${description}</p>
+                    <img src="${iconUrl}" alt="Іконка погоди">
+                `;
+            })
+            .catch(error => {
+                document.getElementById('weather').textContent = 'Помилка: ' + error.message;
+            });
+    </script>
+</body>
+</html>

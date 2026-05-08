@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Видалення збору</title>
+</head>
+<body>
+
+<h1>Видалення збору пожертв</h1>
+
+<p>Ви дійсно хочете видалити збір:</p>
+<h3>{{ campaign.title }}</h3>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Так, видалити</button>
+</form>
+
+<a href="{% url 'organization_list' %}">Скасувати</a>
+
+</body>
+</html>
